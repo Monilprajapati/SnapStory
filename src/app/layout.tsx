@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import NextThemerProvider from "@/providers/theme-provider";
+import Navbar from "@/components/navbar";
 import NextAuthProvider from "@/providers/next-auth-provider";
 import GlobalProvider from "@/contexts";
 
@@ -16,12 +16,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="">
-        <NextThemerProvider>
-          <NextAuthProvider>
-            <GlobalProvider>{children}</GlobalProvider>
-          </NextAuthProvider>
-        </NextThemerProvider>
+        {/* <NextAuthProvider> */}
+        <GlobalProvider>
+          <Navbar />
+          {children}
+        </GlobalProvider>
+        {/* </NextAuthProvider> */}
       </body>
     </html>
   );
