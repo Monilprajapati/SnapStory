@@ -16,7 +16,7 @@ const Navbar = () => {
   const { data: session } = useSession();
   console.log(session);
   return (
-    <div className="flex relative h-[70px] lg:h-[80px] bg-gray-200 my-4 mx-3 lg:mx-20 lg:my-6 px-4 md:px-6 lg:px-8 xl:px-10 rounded-lg border-2 border-slate-500 items-center justify-between">
+    <div className="flex relative h-[70px] lg:h-[80px] bg-gray-200 px-4 md:px-6 lg:px-8 xl:px-10 rounded-lg border-2 border-slate-500 items-center justify-between">
       <Link
         href="/"
         className="logo font-lato text-2xl md:text-3xl lg:text-4xl group hover:font-extrabold cursor-pointer"
@@ -45,7 +45,7 @@ const Navbar = () => {
           <IoSearch className="text-2xl lg:text-3xl" />
         </div>
 
-        <div className="flex items-center gap-3 lg:gap-4">
+        <div className="hidden md:flex items-center gap-3 lg:gap-4">
           {session && (
             <Link
               href="/create"

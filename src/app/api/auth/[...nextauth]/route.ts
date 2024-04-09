@@ -11,13 +11,10 @@ const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ token }: any) {
+    async session({ session, token }: any) {
       // console.log("session", session);
-      console.log("===============================================");
-      console.log("token", token);
-      token.name = `${token?.name}_${token?.sub}`;
-
-      return token;
+      session.user.name = `${session?.user?.name}_${token?.sub}`;
+      return session;
     },
   },
   secret: "default_secret_key",

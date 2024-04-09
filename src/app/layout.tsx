@@ -25,8 +25,10 @@ export default function RootLayout({
       <body className="">
         <NextAuthProvider>
           <GlobalProvider>
-            <Navbar />
-            {children}
+            <div className="my-4 mx-3 md:mx-7 lg:mx-20 lg:my-6">
+              <Navbar />
+              {children}
+            </div>
           </GlobalProvider>
         </NextAuthProvider>
       </body>
