@@ -7,13 +7,16 @@ import Button from "@/components/Button";
 import { pagesRoute } from "@/utils/index";
 import { MdEditNote } from "react-icons/md";
 import { useState } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Falling from "@/components/Spinner/Falling";
 
 const Navbar = () => {
   const [mobileView, setMobileView] = useState(false);
   const [search, setSearch] = useState(false);
-
+  const { data: session } = useSession();
+  console.log(session);
   return (
-    <div className="flex relative h-[70px] lg:h-[80px] bg-gray-200 my-4 mx-3 lg:mx-20 lg:my-6 px-4 md:px-6 lg:px-10 rounded-lg border-2 border-slate-500 items-center justify-between">
+    <div className="flex relative h-[70px] lg:h-[80px] bg-gray-200 my-4 mx-3 lg:mx-20 lg:my-6 px-4 md:px-6 lg:px-8 xl:px-10 rounded-lg border-2 border-slate-500 items-center justify-between">
       <Link
         href="/"
         className="logo font-lato text-2xl md:text-3xl lg:text-4xl group hover:font-extrabold cursor-pointer"
@@ -35,21 +38,30 @@ const Navbar = () => {
       </div>
 
       <div className="rightSection flex gap-7 items-center h-full">
-        <div className="searchButton cursor-pointer" onClick={() => setSearch(!search)}>
+        <div
+          className="searchButton cursor-pointer"
+          onClick={() => setSearch(!search)}
+        >
           <IoSearch className="text-2xl lg:text-3xl" />
         </div>
 
-        <div className="flex items-center gap-3 lg:gap-5">
-          <Link
-            href="/create"
-            className="bg-white text-black p-3 py-2 rounded-md font-plusSans"
-          >
-            <span className="flex items-center gap-1">
-              <MdEditNote className="text-2xl lg:text-3xl" />
-              <span>Write</span>
-            </span>
-          </Link>
-          <Button text="Sign Up" onClick={() => console.log("Sign Up")} />
+        <div className="flex items-center gap-3 lg:gap-4">
+          {session && (
+            <Link
+              href="/create"
+              className="bg-white text-black p-3 py-2 rounded-md font-plusSans"
+            >
+              <span className="flex items-center gap-1">
+                <MdEditNote className="text-2xl lg:text-3xl" />
+                <span>Write</span>
+              </span>
+            </Link>
+          )}
+            <Button
+              text={session ? "Logout" : "Login"}
+              onClick={session ? () => signOut() : () => signIn()}
+            />
+        
         </div>
         <button
           className="hamBurger h-full lg:text-3xl lg:hidden"

@@ -1,7 +1,7 @@
 import React from "react";
 import { LineWave } from "react-loader-spinner";
 
-const Spinner = () => {
+const Linewave = () => {
   return (
     <LineWave
       visible={true}
@@ -18,4 +18,4 @@ const Spinner = () => {
   );
 };
 
-export default Spinner;
+export default Linewave;  
