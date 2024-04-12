@@ -2,7 +2,7 @@
 
 import Button from "@/components/Button";
 import Linewave from "@/components/Spinner/Linewave";
-import GlobalProvider from "@/contexts";
+import { handleImageSaveToFireBase } from "@/config/firebase";
 import { GlobalContext } from "@/contexts";
 import { formControls, initialPostFormData } from "@/utils";
 import { PostFormData } from "@/utils/types";
@@ -15,6 +15,53 @@ const Create = () => {
   const [imageLoading, setImageLoading] = useState<boolean>(false);
   const { data: session } = useSession();
   const router = useRouter();
+
+  async function handlePostImageChange(
+    event: React.ChangeEvent<HTMLInputElement>
+  ) {
+    if (!event.target.files) return;
+    setImageLoading(true);
+    const saveImageToFirebase: any = await handleImageSaveToFireBase(
+      event.target.files[0]
+    );
+
+    if (saveImageToFirebase !== "") {
+      setImageLoading(false);
+      console.log(saveImageToFirebase, "saveImageToFirebase");
+      setFormData({
+        ...formData,
+        image: saveImageToFirebase,
+      });
+    }
+  }
+
+  async function handleSaveBlogPost() {
+    console.log(formData);
+
+    const res = await fetch("/api/posts/add-post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...formData,
+        userid: session?.user?.name,
+        userimage: session?.user?.image,
+        comments: [],
+      }),
+    });
+
+    const data = await res.json();
+
+    console.log(data, "data123");
+
+    if (data && data.success) {
+      setFormData(initialPostFormData);
+      router.push("/posts");
+    }
+  }
+
+  console.log(formData, "formData");
 
   return (
     <section className="overflow-hidden flex items-center justify-center font-plusSans lg:px-10 xl:px-20 py-16 md:py-20 lg:py-28">
@@ -30,11 +77,11 @@ const Create = () => {
                   <label className="mb-3 text-base block font-medium text-black">
                     Upload Post Image
                   </label>
-                  <input
+                  <input  
                     id="fileinput"
                     accept="image/*"
                     max={1000000}
-                    // onChange={handleBlogImageChange}
+                    onChange={handlePostImageChange}
                     type="file"
                     className="w-full mb-3 rounded-md border border-transparent py-3 px-6 text-base  bg-white text-black placeholder-black shadow-one outline-none focus-visible:shadow-none"
                   />
@@ -81,7 +128,7 @@ const Create = () => {
                             [control.id]: event.target.value,
                           });
                         }}
-                        value={formData[control.id as keyof BlogFormData]}
+                        value={formData[control.id as keyof PostFormData]}
                         className="w-full mb-6 rounded-md border border-transparent py-3 px-4 text-base text-black placeholder-gray-400 shadow-one outline-none  focus-visible:shadow-none"
                       />
                     ) : control.component === "select" ? (
@@ -115,12 +162,7 @@ const Create = () => {
                   </div>
                 ))}
                 <div className="w-full px-4 mt-1">
-                  <Button
-                    text="Create Post"
-                    onClick={() => {
-                      console.log(formData);
-                    }}
-                  />
+                  <Button text="Create Post" onClick={handleSaveBlogPost} />
                 </div>
               </div>
             </div>
