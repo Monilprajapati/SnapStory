@@ -8,11 +8,14 @@ import { pagesRoute } from "@/utils/index";
 import { MdEditNote } from "react-icons/md";
 import { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import Falling from "@/components/Spinner/Falling";
+import Image from "next/image";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
 
 const Navbar = () => {
   const [mobileView, setMobileView] = useState(false);
   const [search, setSearch] = useState(false);
+  const [logoutToggle, setLogoutToggle] = useState(false);
   const { data: session } = useSession();
   console.log(session);
   return (
@@ -61,7 +64,42 @@ const Navbar = () => {
               text={session ? "Logout" : "Login"}
               onClick={session ? () => signOut() : () => signIn()}
             />
-        
+            {/* User profile */}
+           {/* <div>
+            {session ? (
+              <>
+                <div
+                  className={`flex gap-2 items-center bg-white cursor-pointer rounded-full px-3 py-2.5 ${
+                    logoutToggle ? "rounded-b-none rounded-t-3xl" : ""
+                  }`}
+                  onClick={() => setLogoutToggle(!logoutToggle)}
+                >
+                  <div className="flex gap-1 relative items-center">
+                    <div className="h-8 w-8 relative overflow-hidden rounded-full">
+                      <Image
+                        src={session?.user?.image ?? ""}
+                        layout="fill"
+                        alt="User"
+                      />
+                    </div>
+                    <span>{session?.user?.name?.split(" ")[0]}</span>
+                  </div>
+                  {logoutToggle ? (
+                    <IoIosArrowUp className="text-xl" />
+                  ) : (
+                    <IoIosArrowDown className="text-xl" />
+                  )}
+                </div>
+                {logoutToggle && (
+                  <div className="absolute top-15 right-10 bg-white py-2 pt-4 px-3 pl-[13px] rounded-b-3xl shadow-lg">
+                    <Button text="Logout" onClick={() => signOut()} />
+                  </div>
+                )}
+              </>
+            ) : (
+              <Button text="Login" onClick={() => signIn} />
+            )}
+          </div> */}
         </div>
         <button
           className="hamBurger h-full lg:text-3xl lg:hidden"
