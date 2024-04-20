@@ -5,14 +5,14 @@ import PostCard from "../post-card";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-const PostList = (
-  { lists }: { lists: Post[] }
-) => {
+const PostList = ({ lists }: { lists: Post[] }) => {
   const router = useRouter();
+
   useEffect(() => {
     router.refresh();
   }, []);
 
+  console.log(lists);
   // Delete post API call
   async function handleDelete(id: number) {
     console.log(id);
@@ -30,18 +30,20 @@ const PostList = (
   return (
     <section className="pt-[120px] pb-[120px]">
       <div className="container">
-        <div className="-mx-4 grid grid-cols-3 gap-2">
+        <div className="flex flex-wrap gap-3 items-center w-full">
           {lists && lists.length
             ? lists.map((listItem: Post) => (
-                <div className="px-4" key={listItem.id}>
-                  <PostCard handleDelete={handleDelete} postItem={listItem} />
-                </div>
+                <PostCard
+                  handleDelete={handleDelete}
+                  postItem={listItem}
+                  key={listItem.id}
+                />
               ))
             : null}
         </div>
       </div>
     </section>
   );
-}
+};
 
-export default PostList
+export default PostList;
