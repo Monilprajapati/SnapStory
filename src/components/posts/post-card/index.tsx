@@ -102,13 +102,13 @@ const PostCard = ({
     //   </div>
     // </Link>
     <div className="md:w-[350px] lg:w-[420px] py-7 pb-5 px-5 xl:px-6 rounded-lg h-[450px] shadow-shadowOne text-black flex flex-col justify-between bg-gray-200">
-        <div className="w-full rounded-md">
-          <img
-            className="w-full h-[200px] object-cover rounded-md"
-            src={image}
-            alt="src"
-          />
-        </div>
+      <div className="w-full rounded-md">
+        <img
+          className="w-full h-[200px] object-cover rounded-md"
+          src={image}
+          alt="src"
+        />
+      </div>
       <div className="flex flex-col w-full items-start mb-4 h-full justify-between">
         <h1 className="text-sm font-bold mt-4 mb-2 bg-white rounded-2xl px-4 py-1.5">
           {category.toUpperCase()}
