@@ -94,8 +94,8 @@ const Create = () => {
               </div>
 
               <div className="-mx-4 flex flex-wrap">
-                {formControls.map((control) => (
-                  <div className="w-full px-4">
+                {formControls.map((control,index) => (
+                  <div className="w-full px-4" key={index}>
                     <label className="mb-2 text-lg block font-medium text-black">
                       {control.label}
                     </label>
@@ -134,7 +134,7 @@ const Create = () => {
                     ) : control.component === "select" ? (
                       <select
                         name={control.id}
-                        placeholder={control.placeholder}
+                        placeholder={control.placeholder || "Select"}
                         onChange={(
                           event: React.ChangeEvent<HTMLSelectElement>
                         ) => {
@@ -149,10 +149,11 @@ const Create = () => {
                         <option value={""} id="">
                           Select
                         </option>
-                        {control.options.map((optionItem) => (
+                        {control.options.map((optionItem, index) => (
                           <option
                             id={optionItem.value}
                             value={optionItem.value}
+                            key={index}
                           >
                             {optionItem.label}
                           </option>
