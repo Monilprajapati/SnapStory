@@ -18,7 +18,7 @@ const PostDetails = ({ postData }: { postData: Post }) => {
   async function handleCommentSave() {
     let extractComments = [...postData.comments];
 
-    extractComments.push(`${comment}|${session?.user?.name}`);
+    extractComments.push(`${comment}|${session?.user?.name}|${session?.user?.image}`);
 
     const response = await fetch(`/api/posts/update-post`, {
       method: "PUT",
@@ -53,6 +53,7 @@ const PostDetails = ({ postData }: { postData: Post }) => {
 
   if (!postData) return null;
 
+  console.log(postData, "PostData");
   return (
     <>
       <section className="pt-20 pb-[120px]">
@@ -83,7 +84,7 @@ const PostDetails = ({ postData }: { postData: Post }) => {
                   </div>
                   <div className="mb-5">
                     <Link
-                      className="inline-flex items-center justify-center rounded-full bg-primary py-2 px-4 text-sm font-semibold text-black"
+                      className="inline-flex items-center justify-center rounded-full bg-primary py-2 px-4 text-sm font-semibold bg-slate-300 text-black"
                       href={`/category/${postData?.category}`}
                     >
                       {postData?.category}
@@ -107,7 +108,7 @@ const PostDetails = ({ postData }: { postData: Post }) => {
                 </div>
               </div>
             </div>
-            <section className="bg-gray-200 flex flex-col items-center px-4 py-8 lg:py-10 w-full lg:w-8/12">
+            <section className="flex flex-col items-center px-4 py-8 lg:py-10 w-full lg:w-8/12">
               <div className="w-full flex gap-4">
                 {session !== null ? (
                   <>
@@ -128,31 +129,42 @@ const PostDetails = ({ postData }: { postData: Post }) => {
                 ) : null}
               </div>
               <div className="">
-                <div className="mb-6">
+                <div className="mb-6 mt-4">
                   <h2 className="text-lg lg:text-2xl font-bold text-black dark:text-black">
                     Discussion ({postData?.comments.length})
                   </h2>
                 </div>
-                {postData && postData.comments && postData.comments.length > 0
-                  ? postData.comments.map((comment) => (
-                      <div className="p-6 text-base rounded-lg bg-gray-200">
-                        <div className=" mb-2">
-                          <div className="flex items-center">
-                            <p className="inline-flex items-center mr-3 text-sm text-black dark:text-black font-semibold">
-                              {comment.split("|")[1] === postData?.userid
-                                ? `${
-                                    comment.split("|")[1].split("_")[0]
-                                  } (Author)`
-                                : comment.split("|")[1].split("_")[0]}
-                            </p>
+                <div className="flex flex-col gap-4 flex-wrap">
+                  {postData && postData.comments && postData.comments.length > 0
+                    ? postData.comments.map((comment) => (
+                        <div className="p-6 text-base rounded-lg bg-gray-200">
+                          <div className=" mb-2">
+                            <div className="flex gap-2 items-center">
+                              <div className="relative h-10 w-10 overflow-hidden rounded-full">
+                                <Image
+                                  src={
+                                    comment.split("|")[2] || ""
+                                  }
+                                  alt="User"
+                                  fill
+                                />
+                              </div>
+                              <p className="inline-flex items-center mr-3 text-sm text-black dark:text-black font-semibold">
+                                {comment.split("|")[1] === postData?.userid
+                                  ? `${
+                                      comment.split("|")[1].split("_")[0]
+                                    } (Author)`
+                                  : comment.split("|")[1].split("_")[0]}
+                              </p>
+                            </div>
                           </div>
+                          <p className="text-black ml-2 mt-1">
+                            {comment.split("|")[0]}
+                          </p>
                         </div>
-                        <p className="text-gray-500 dark:text-gray-400">
-                          {comment.split("|")[0]}
-                        </p>
-                      </div>
-                    ))
-                  : null}
+                      ))
+                    : null}
+                </div>
               </div>
             </section>
           </div>

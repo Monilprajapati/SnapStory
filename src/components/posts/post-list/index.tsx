@@ -7,9 +7,15 @@ import { useRouter } from "next/navigation";
 
 const PostList = ({ lists }: { lists: Post[] }) => {
   const router = useRouter();
-
+  
   useEffect(() => {
-    router.refresh();
+    let interval = setInterval(() => {
+      router.refresh();
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   console.log(lists);
@@ -30,7 +36,7 @@ const PostList = ({ lists }: { lists: Post[] }) => {
   return (
     <section className="pt-[120px] pb-[120px]">
       <div className="container">
-        <div className="flex flex-wrap gap-3 items-center w-full">
+        <div className="flex flex-wrap gap-5 items-center gap-y-7 w-full">
           {lists && lists.length
             ? lists.map((listItem: Post) => (
                 <PostCard

@@ -6,10 +6,6 @@ export const pagesRoute = [
     label: "Posts",
   },
   {
-    path: "/category",
-    label: "Category",
-  },
-  {
     path: "/about",
     label: "About",
   },

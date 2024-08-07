@@ -43,29 +43,39 @@ const Navbar = () => {
       <div className="rightSection flex gap-7 items-center h-full">
         <div
           className="searchButton cursor-pointer"
-          onClick={() => setSearch(!search)}
+          // onClick={() => setSearch(!search)}
+        
         >
           <IoSearch className="text-2xl lg:text-3xl" />
         </div>
 
         <div className="hidden md:flex items-center gap-3 lg:gap-4">
           {session && (
-            <Link
-              href="/create"
-              className="bg-white text-black p-3 py-2 rounded-md font-plusSans"
-            >
-              <span className="flex items-center gap-1">
-                <MdEditNote className="text-2xl lg:text-3xl" />
-                <span>Write</span>
-              </span>
-            </Link>
+            <div className="flex gap-4 items-center">
+              <Link
+                href="/create"
+                className="bg-white text-black p-3 py-2 rounded-md font-plusSans"
+              >
+                <span className="flex items-center gap-1">
+                  <MdEditNote className="text-2xl lg:text-3xl" />
+                  <span>Write</span>
+                </span>
+              </Link>
+              <Image
+                src={session?.user?.image ?? ""}
+                width={40}
+                height={40}
+                alt="avatar"
+                className="rounded-full"
+              />
+            </div>
           )}
-            <Button
-              text={session ? "Logout" : "Login"}
-              onClick={session ? () => signOut() : () => signIn()}
-            />
-            {/* User profile */}
-           {/* <div>
+          <Button
+            text={session ? "Logout" : "Login"}
+            onClick={session ? () => signOut() : () => signIn()}
+          />
+          {/* User profile */}
+          {/* <div>
             {session ? (
               <>
                 <div
