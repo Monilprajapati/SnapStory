@@ -6,7 +6,6 @@ const Falling = () => {
       color="#000000"
       width="50"
       visible={true}
-      ariaLabel="falling-circles-loading"
     />
   );
 };

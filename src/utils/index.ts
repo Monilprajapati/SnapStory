@@ -1,6 +1,11 @@
 import { FormControlItem, Option } from "./types";
 
-export const pagesRoute = [
+interface Route {
+  path: string;
+  label: string;
+}
+
+export const pagesRoute: Route[] = [
   {
     path: "/posts",
     label: "Posts",

@@ -134,7 +134,6 @@ const Create = () => {
                     ) : control.component === "select" ? (
                       <select
                         name={control.id}
-                        placeholder={control.placeholder || "Select"}
                         onChange={(
                           event: React.ChangeEvent<HTMLSelectElement>
                         ) => {
@@ -146,8 +145,8 @@ const Create = () => {
                         value={formData[control.id as keyof PostFormData]}
                         className="w-full mb-6 rounded-md border border-transparent py-3 px-4 text-base text-black placeholder-gray-400 bg-white shadow-one outline-none  focus-visible:shadow-none"
                       >
-                        <option value={""} id="">
-                          Select
+                        <option value={""} id="" disabled>
+                        {control.placeholder || "Select an option"}
                         </option>
                         {control.options.map((optionItem, index) => (
                           <option

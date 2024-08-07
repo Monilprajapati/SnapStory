@@ -136,8 +136,8 @@ const PostDetails = ({ postData }: { postData: Post }) => {
                 </div>
                 <div className="flex flex-col gap-4 flex-wrap">
                   {postData && postData.comments && postData.comments.length > 0
-                    ? postData.comments.map((comment) => (
-                        <div className="p-6 text-base rounded-lg bg-gray-200">
+                    ? postData.comments.map((comment, index) => (
+                        <div className="p-6 text-base rounded-lg bg-gray-200" key={index}>
                           <div className=" mb-2">
                             <div className="flex gap-2 items-center">
                               <div className="relative h-10 w-10 overflow-hidden rounded-full">
