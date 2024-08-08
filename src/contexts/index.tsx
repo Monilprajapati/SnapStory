@@ -8,14 +8,14 @@ import {
   useState,
 } from "react";
 import { useSession } from "next-auth/react";
-import Linewave from "@/components/Spinner/Linewave";
+import { DNA } from "react-loader-spinner";
 import { PostFormData } from "@/utils/types";
 import { initialPostFormData } from "@/utils";
 import { usePathname, useRouter } from "next/navigation";
 
 type ContextType = {
   loading: boolean;
-  setLoading: Dispatch<SetStateAction<boolean>>,
+  setLoading: Dispatch<SetStateAction<boolean>>;
   formData: PostFormData;
   setFormData: Dispatch<SetStateAction<PostFormData>>;
 };
@@ -38,12 +38,25 @@ const GlobalProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-
-  if (session === undefined) return <Linewave />;
+  if (session === undefined)
+    return (
+      <div className="w-screen h-screen mt-56 flex items-center justify-center">
+        <DNA
+          visible={true}
+          height="150"
+          width="150"
+          ariaLabel="dna-loading"
+          wrapperStyle={{}}
+          wrapperClass="dna-wrapper"
+        />
+      </div>
+    );
   if (session === null && pathname === "/create") router.push("/");
 
   return (
-    <GlobalContext.Provider value={{ loading, setLoading, formData, setFormData }}>
+    <GlobalContext.Provider
+      value={{ loading, setLoading, formData, setFormData }}
+    >
       {children}
     </GlobalContext.Provider>
   );

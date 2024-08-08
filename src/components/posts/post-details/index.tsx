@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import noImg from "/public/noImg.png";
+import Linewave from "@/components/Spinner/Linewave";
 
 const PostDetails = ({ postData }: { postData: Post }) => {
   console.log(postData, "PostData");
@@ -96,25 +97,23 @@ const PostDetails = ({ postData }: { postData: Post }) => {
                 </div>
                 <div>
                   <div className="mb-10 w-full overflow-hidden rounded">
-                    {postData?.image ? (
-                      <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
+                    <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
+                      {postData?.image ? (
                         <Image
                           src={postData?.image || ""}
                           alt="Blog"
                           className="object-cover object-center"
                           fill
                         />
-                      </div>
-                    ) : (
-                      <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
+                      ) : (
                         <Image
                           src={noImg || ""}
                           alt="Blog"
                           className="object-cover object-center"
                           fill
                         />
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                   <p className="mb-8 leading-relaxed text-base font-medium text-body-color sm:text-lg lg:text-base xl:text-lg">
                     {postData?.description}
