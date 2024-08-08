@@ -9,6 +9,7 @@ import { PostFormData } from "@/utils/types";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const Create = () => {
   const { formData, setFormData } = useContext(GlobalContext);
@@ -38,6 +39,26 @@ const Create = () => {
   async function handleSaveBlogPost() {
     console.log(formData);
 
+    if (!formData.title || !formData.description) {
+      toast.error("Please fill all the fields");
+      return;
+    }
+
+    if (formData.title.length < 5) {
+      toast.error("Title should be atleast 5 characters long");
+      return;
+    }
+
+    if (formData.description.length < 10) {
+      toast.error("Description should be atleast 10 characters long");
+      return;
+    }
+
+    if (formData.category === "") {
+      toast.error("Please select a category");
+      return;
+    }
+
     const res = await fetch("/api/posts/add-post", {
       method: "POST",
       headers: {
@@ -57,6 +78,7 @@ const Create = () => {
 
     if (data && data.success) {
       setFormData(initialPostFormData);
+      toast.success("Snap created successfully");
       router.push("/posts");
     }
   }
@@ -77,7 +99,7 @@ const Create = () => {
                   <label className="mb-3 text-base block font-medium text-black">
                     Upload Post Image
                   </label>
-                  <input  
+                  <input
                     id="fileinput"
                     accept="image/*"
                     max={1000000}
@@ -94,7 +116,7 @@ const Create = () => {
               </div>
 
               <div className="-mx-4 flex flex-wrap">
-                {formControls.map((control,index) => (
+                {formControls.map((control, index) => (
                   <div className="w-full px-4" key={index}>
                     <label className="mb-2 text-lg block font-medium text-black">
                       {control.label}
@@ -146,7 +168,7 @@ const Create = () => {
                         className="w-full mb-6 rounded-md border border-transparent py-3 px-4 text-base text-black placeholder-gray-400 bg-white shadow-one outline-none  focus-visible:shadow-none"
                       >
                         <option value={""} id="" disabled>
-                        {control.placeholder || "Select an option"}
+                          {control.placeholder || "Select an option"}
                         </option>
                         {control.options.map((optionItem, index) => (
                           <option

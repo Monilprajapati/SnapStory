@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import NextAuthProvider from "@/providers/next-auth-provider";
 import GlobalProvider from "@/contexts";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "SnapStory",
@@ -27,6 +28,7 @@ export default function RootLayout({
           <GlobalProvider>
             <div className="my-4 mx-3 md:mx-7 lg:mx-20 lg:my-6">
               <Navbar />
+              <Toaster position="top-center" />
               {children}
             </div>
           </GlobalProvider>

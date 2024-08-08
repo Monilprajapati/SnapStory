@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaTrash } from "react-icons/fa";
 import Linewave from "@/components/Spinner/Linewave";
-
+import noImg from "/public/noImg.png";
 const PostCard = ({
   postItem,
   handleDelete,
@@ -17,10 +17,6 @@ const PostCard = ({
   const { image, category, title, description, userimage, userid, id } =
     postItem;
   const { data: session } = useSession();
-
-  console.log(session, userid);
-
-  console.log(postItem, "postItem");
 
   return (
     // <Link href={`/posts/${id}`}>
@@ -102,62 +98,61 @@ const PostCard = ({
     //     <span className="font-bold mt-1">{userid.split("_")[0]}</span>
     //   </div>
     // </Link>
-    <Link href={`/posts/${id}`}>
-      <div className="md:w-[350px] lg:w-[420px] py-7 pb-5 px-5 xl:px-6 rounded-lg h-[450px] shadow-shadowOne text-black flex flex-col justify-between bg-gray-200">
+    <div className="md:w-[350px] lg:w-[420px] py-7 pb-5 px-5 xl:px-6 rounded-lg h-[450px] shadow-shadowOne text-black flex flex-col justify-between bg-gray-200">
+      <Link href={`/posts/${id}`}>
         <div className="w-full rounded-md">
-          {
-            !image ? (
-              <div className="w-full h-[200px] object-cover rounded-md bg-gray-400">
-                <Linewave />
-              </div>
-            ) : (
-              <img
-                className="w-full h-[200px] object-cover rounded-md"
-                src={image}
-                alt="src"
-              />
-            )
-          }
-          {/* <img
-            className="w-full h-[200px] object-cover rounded-md"
-            src={image}
-            alt="src"
-          /> */}
-        </div>
-        <div className="flex flex-col w-full items-start mb-4 h-full justify-between">
-          <h1 className="text-sm font-bold mt-4 mb-2 bg-white rounded-2xl px-4 py-1.5">
-            {category.toUpperCase()}
-          </h1>
-          <h3 className="text-xl font-lato font-semibold line-clamp-1 mt-1">
-            {title}
-          </h3>
-          <p className="text-sm tracking-wider line-clamp-2 mt-2">
-            {description}
-          </p>
-        </div>
-        <div className="flex items-center w-full justify-between h-full">
-          <div className="flex items-center gap-2 w-full h-full">
+          {!image ? (
             <Image
-              src={userimage}
-              width={40}
-              height={40}
-              alt="avatar"
-              className="rounded-full"
+              alt="no image"
+              src={noImg}
+              width={400}
+              height={200}
+              className="h-[200px] object-cover rounded-md"
             />
-            <span className="font-bold mt-1">{userid.split("_")[0]}</span>
-          </div>
-          <div>
-            {session !== null && session?.user?.name === userid ? (
-              <FaTrash
-                onClick={() => handleDelete(id)}
-                size={20}
-                className="cursor-pointer"
-              />
-            ) : null}
-          </div>
+          ) : (
+            <Image
+              className="h-[200px] object-cover rounded-md"
+              src={image}
+              width={400}
+              height={200}
+              alt="src"
+            />
+          )}
+        </div>
+      </Link>
+      <div className="flex flex-col w-full items-start mb-4 h-full justify-between">
+        <h1 className="text-sm font-bold mt-4 mb-2 bg-white rounded-2xl px-4 py-1.5">
+          {category.toUpperCase()}
+        </h1>
+        <h3 className="text-xl font-lato font-semibold line-clamp-1 mt-1">
+          {title}
+        </h3>
+        <p className="text-sm tracking-wider line-clamp-2 mt-2">
+          {description}
+        </p>
+      </div>
+      <div className="flex items-center w-full justify-between h-full">
+        <div className="flex items-center gap-2 w-full h-full">
+          <Image
+            src={userimage}
+            width={40}
+            height={40}
+            alt="avatar"
+            className="rounded-full"
+          />
+          <span className="font-bold mt-1">{userid.split("_")[0]}</span>
+        </div>
+        <div>
+          {session !== null && session?.user?.name === userid ? (
+            <FaTrash
+              onClick={() => handleDelete(id)}
+              size={20}
+              className="cursor-pointer"
+            />
+          ) : null}
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

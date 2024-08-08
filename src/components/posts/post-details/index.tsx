@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import noImg from "/public/noImg.png";
 
 const PostDetails = ({ postData }: { postData: Post }) => {
   console.log(postData, "PostData");
@@ -18,7 +19,9 @@ const PostDetails = ({ postData }: { postData: Post }) => {
   async function handleCommentSave() {
     let extractComments = [...postData.comments];
 
-    extractComments.push(`${comment}|${session?.user?.name}|${session?.user?.image}`);
+    extractComments.push(
+      `${comment}|${session?.user?.name}|${session?.user?.image}`
+    );
 
     const response = await fetch(`/api/posts/update-post`, {
       method: "PUT",
@@ -93,14 +96,25 @@ const PostDetails = ({ postData }: { postData: Post }) => {
                 </div>
                 <div>
                   <div className="mb-10 w-full overflow-hidden rounded">
-                    <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
-                      <Image
-                        src={postData?.image || ""}
-                        alt="Blog"
-                        className="object-cover object-center"
-                        fill
-                      />
-                    </div>
+                    {postData?.image ? (
+                      <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
+                        <Image
+                          src={postData?.image || ""}
+                          alt="Blog"
+                          className="object-cover object-center"
+                          fill
+                        />
+                      </div>
+                    ) : (
+                      <div className="relative aspect-[97/60] w-full sm:aspect-[97/44]">
+                        <Image
+                          src={noImg || ""}
+                          alt="Blog"
+                          className="object-cover object-center"
+                          fill
+                        />
+                      </div>
+                    )}
                   </div>
                   <p className="mb-8 leading-relaxed text-base font-medium text-body-color sm:text-lg lg:text-base xl:text-lg">
                     {postData?.description}
@@ -137,14 +151,15 @@ const PostDetails = ({ postData }: { postData: Post }) => {
                 <div className="flex flex-col gap-4 flex-wrap">
                   {postData && postData.comments && postData.comments.length > 0
                     ? postData.comments.map((comment, index) => (
-                        <div className="p-6 text-base rounded-lg bg-gray-200" key={index}>
+                        <div
+                          className="p-6 text-base rounded-lg bg-gray-200"
+                          key={index}
+                        >
                           <div className=" mb-2">
                             <div className="flex gap-2 items-center">
                               <div className="relative h-10 w-10 overflow-hidden rounded-full">
                                 <Image
-                                  src={
-                                    comment.split("|")[2] || ""
-                                  }
+                                  src={comment.split("|")[2] || ""}
                                   alt="User"
                                   fill
                                 />

@@ -8,7 +8,7 @@ interface Route {
 export const pagesRoute: Route[] = [
   {
     path: "/posts",
-    label: "Posts",
+    label: "Snaps",
   },
   {
     path: "/about",
