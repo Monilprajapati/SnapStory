@@ -1,7 +1,7 @@
 import PostList from "@/components/posts/post-list";
 
 async function extractAllBlogs() {
-  const res = await fetch(`${process.env.URL}/api/posts/get-all-posts`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/posts/get-all-posts`, {
     method: "GET",
     cache: "no-store",
   });
